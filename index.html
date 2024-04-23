@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f0f0f0;
+}
+.container {
+width: 300px;
+margin: 100px auto;
+padding: 20px;
+background-color: #fff;
+border-radius: 5px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+text-align: center;
+margin-bottom: 20px;
+}
+input[type="email"], input[type="password"] {
+width: 100%;
+padding: 10px;
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 3px;
+}
+input[type="submit"] {
+width: 100%;
+padding: 10px;
+background-color: #007bff;
+border: none;
+border-radius: 3px;
+color: #fff;
+cursor: pointer;
+}
+input[type="submit"]:hover {
+background-color: #0056b3;
+}
+.requirements {
+margin-bottom: 10px;
+}
+li {
+  margin-left: 1rem;
+}
+ul {
+  font-size: .8rem;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Login</h2>
+<form>
+<input type="email" name="email" placeholder="Enter your email" required>
+<input type="password" name="password" id="password" placeholder="Password" required>
+<div class="requirements" id="requirements">
+  Password Requirements:
+  <ul>
+    <li id="length">Password must be between 8 and 20 characters long.</li>
+    <li id="capital">Password must contain at least one capital letter.</li>
+    <li id="number">Password must contain at least one number.</li>
+    <li id="spaces">Password cannot contain spaces.</li>
+  </ul>
+</div>
+<input type="checkbox" onclick="showPassword()"> Show Password<br>
+<input type="submit" name="login" value="Login">
+</form>
+</div>
+<script>
+let passwordInput = document.getElementById("password");
+let requirementsDiv = document.getElementById("requirements");
+let form = document.querySelector("form");
+
+// Add event listener for input event on password field
+passwordInput.addEventListener("input", () => {
+  let password = passwordInput.value;
+  validatePassword(password);
+});
+
+function validatePassword(password) {
+  let lengthRequirement = document.getElementById("length");
+  let capitalRequirement = document.getElementById("capital");
+  let numberRequirement = document.getElementById("number");
+  let spacesRequirement = document.getElementById("spaces");
+
+  // Reset requirements color
+  lengthRequirement.style.color = "";
+  capitalRequirement.style.color = "";
+  numberRequirement.style.color = "";
+  spacesRequirement.style.color = "";
+
+  // Update requirements color based on validation errors
+  if (password.length < 8 || password.length > 20) {
+    lengthRequirement.style.color = "red";
+  } else {
+    lengthRequirement.style.color = "green";
+  }
+  if (!/[A-Z]/.test(password)) {
+    capitalRequirement.style.color = "red";
+  } else {
+    capitalRequirement.style.color = "green";
+  }
+  if (!/[0-9]/.test(password)) {
+    numberRequirement.style.color = "red";
+  } else {
+    numberRequirement.style.color = "green";
+  }
+  if (/\s/.test(password)) {
+    spacesRequirement.style.color = "red";
+  } else {
+    spacesRequirement.style.color = "green";
+  }
+}
+
+function showPassword() {
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+  } else {
+    passwordInput.type = "password";
+  }
+}
+</script>
+</body>
+</html>
